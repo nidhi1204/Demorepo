@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Portfolio</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+    type="text/css" />
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" type="text/javascript"
+    language="javascript"></script>
+
+  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <link href="css/style.css" type="text/css" rel="stylesheet" />
+
+  <script type="text/javascript">
+    //Reg Ex Declaration - Globaly.
+    var $FNameLNameRegEx = /^([a-zA-Z]{2,20})$/;
+    var $FullNameRegEx = /^([a-zA-Z ]{2,40})$/;
+    var $BankAccountNameRegEx = /^([a-zA-Z ]{2,60})$/;
+    var $PasswordRegEx = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{8,12}$/;
+
+    var $EmailIdRegEx = /^\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,8}\b$/i;
+    var $ConNoRegEx = /^([0-9]{10})$/;
+    var $AgeRegEx = /^([0-9]{1,2})$/;
+    var $AadhaarNoRegEx = /^([0-9]{12})$/;
+    var $GSTNoRegEx = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
+    var $IndianDrivingLicenseNoRegEx = /^([A-Z]{2,3}[-/0-9]{8,13})$/;
+    var $IndianVehicleRegNoRegEx = /^([A-Z]{2}[0-9]{1,2}[A-Z]{1,3}[0-9]{1,4})$/;
+    var $PincodeRegEx = /^[1-9][0-9]{5,6}$/;
+    var $PANNoRegEx = /^[A-Z]{3}[ABCFGHLJPT][A-Z][0-9]{4}[A-Z]$/;
+    var $IFSCCodeRegEx = /^[A-Za-z]{4}0[A-Z0-9a-z]{6}$/;
+    var $BankAccountNoRegEx = /^([0-9]{9,18})$/;
+    var $LatitudeLongitude = /^(-?(?:1[0-7]|[1-9])?\d(?:\.\d{1,8})?|180(?:\.0{1,8})?)$/;
+
+    $(document).ready(function () {
+
+      $("#TxtFirstname").blur(function () {
+        $("#TxtFirstnameValidate").empty();
+        if ($(this).val().trim() == "" || $(this).val().trim() == null) {
+          $("#TxtFirstnameValidate").html("(*) Firstname required..!!");
+        }
+        else {
+          if (!$(this).val().trim().match($FNameLNameRegEx)) {
+            $("#TxtFirstnameValidate").html("(*) Firstname invalid..!!");
+          }
+        }
+      });
+
+      $("#TxtFirstname").keypress(function (e) {
+        var ASCIIValue = e.which, Flag = false;
+        $("#TxtFirstnameValidate").empty();
+        ((ASCIIValue >= 65 && ASCIIValue <= 90) || (ASCIIValue >= 97 && ASCIIValue <= 121))
+          ? (Flag = true)
+          : ($("#TxtFirstnameValidate").html("Invalid Input...!!"), Flag = false)
+        return Flag;
+      });
+
+      $("#TxtLastname").blur(function () {
+        $("#TxtLastnameValidate").empty();
+        if ($(this).val().trim() == "" || $(this).val().trim() == null) {
+          $("#TxtLastnameValidate").html("(*) Lastname required..!!");
+        }
+        else {
+          if (!$(this).val().trim().match($FNameLNameRegEx)) {
+            $("#TxtLastnameValidate").html("(*) Laname invalid..!!");
+          }
+        }
+      });
+
+      $("#TxtLastname").keypress(function (e) {
+        var ASCIIValue = e.which, Flag = false;
+        $("#TxtLastnameValidate").empty();
+        ((ASCIIValue >= 65 && ASCIIValue <= 90) || (ASCIIValue >= 97 && ASCIIValue <= 121))
+          ? (Flag = true)
+          : ($("#TxtLastnameValidate").html("Invalid Input...!!"), Flag = false)
+        return Flag;
+      });
+
+      $("#TxtEmailid").blur(function () {
+        $("#TxtEmailidValidate").empty();
+        if ($(this).val().trim() == "" || $(this).val().trim() == null) {
+          $("#TxtEmailidValidate").html("(*) Email id required..!!");
+        }
+        else {
+          if (!$(this).val().trim().match($EmailIdRegEx)) {
+            $("#TxtEmailidValidate").html("(*) Email invalid..!!");
+          }
+        }
+      });
+
+      $("#TxtContactNo").blur(function () {
+        $("#TxtContactNoValidate").empty();
+        if ($(this).val().trim() == "" || $(this).val().trim() == null) {
+          $("#TxtContactNoValidate").html("(*) Contact no required..!!");
+        }
+        else {
+          if (!$(this).val().trim().match($ConNoRegEx)) {
+            $("#TxtContactNoValidate").html("(*)  invalid phone no..!!");
+          }
+        }
+      });
+
+      $("#TxtContactNo").keypress(function (e) {
+        var ASCIIValue = e.which, Flag = false;
+        $("#TxtContactNoValidate").empty();
+        ((ASCIIValue >= 48 && ASCIIValue <= 57))
+          ? (Flag = true)
+          : ($("#TxtContactNoValidate").html("Invalid Input...!!"), Flag = false)
+        return Flag;
+      });
+
+      var TxtFirstnameFlag = false, TxtLastnameFlag = false, TxtEmailidFlag = false, TxtContactNoFlag = false;
+      $("#BtnSub").click(function () {
+        $("#TxtFirstnameValidate").empty();
+        if ($("#TxtFirstname").val().trim() == "" || $("#TxtFirstname").val().trim() == null) {
+          $("#TxtFirstnameValidate").html("(*) Firstname required..!!");
+          TxtFirstnameFlag = false;
+        }
+        else {
+          if (!$("#TxtFirstname").val().trim().match($FNameLNameRegEx)) {
+            $("#TxtFirstnameValidate").html("Invalid firstname..!!");
+            TxtFirstnameFlag = false;
+          }
+          else {
+            TxtFirstnameFlag = true;
+          }
+        }
+
+
+        $("#TxtLastnameValidate").empty();
+        if ($("#TxtLastname").val().trim() == "" || $("#TxtLastname").val().trim() == null) {
+          $("#TxtLastnameValidate").html("(*) Lastname required..!!");
+          TxtLastnameFlag = false;
+        }
+        else {
+          if (!$("#TxtLastname").val().trim().match($FNameLNameRegEx)) {
+            $("#TxtLastnameValidate").html("Invalid lastname..!!");
+            TxtLastnameFlag = false;
+          }
+          else {
+            TxtLastnameFlag = true;
+          }
+        }
+
+        $("#TxtEmailidValidate").empty();
+        if ($("#TxtEmailid").val().trim() == "" || $("#TxtEmailid").val().trim() == null) {
+          $("#TxtEmailidValidate").html("(*) Email id required..!!");
+          TxtEmailidFlag = false;
+        }
+        else {
+          if (!$("#TxtEmailid").val().trim().match($EmailIdRegEx)) {
+            $("#TxtEmailidValidate").html("Invalid email id..!!");
+            TxtEmailidFlag = false;
+          }
+          else {
+            TxtEmailidFlag = true;
+          }
+        }
+
+        $("#TxtContactNoValidate").empty();
+        if ($("#TxtContactNo").val().trim() == "" || $("#TxtContactNo").val().trim() == null) {
+          $("#TxtContactNoValidate").html("(*) Contactno required..!!");
+          TxtContactNoFlag = false;
+        }
+        else {
+          if (!$("#TxtContactNo").val().trim().match($ConNoRegEx)) {
+            $("#TxtContactNoValidate").html("Invalid contact no..!!");
+            TxtContactNoFlag = false;
+          }
+          else {
+            TxtContactNoFlag = true;
+          }
+        }
+
+        if (TxtFirstnameFlag == true && TxtLastnameFlag == true && TxtEmailidFlag == true && TxtContactNoFlag == true) {
+          alert("Form Submitted Successfully..!!");
+        }
+        else {
+          alert("Invalid Form Inputs..!!");
+        }
+
+
+
+
+
+
+
+
+      });
+
+
+    });
+
+
+
+  </script>
+</head>
+
+<body style="margin:0; padding: 0;">
+
+
+
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Nidhi Soni</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav" style="float:right;">
+          <li><a href="#Intro">Intro</a></li>
+          <li><a href="#TS">Technical Summary</a></li>
+          <li><a href="#Qualifications">Qualifications</a></li>
+          <li><a href="#CERTIFICATIONS">Certifications</a></li>
+          <li><a href="#contact">Contact Us</a></li>
+        </ul>
+
+      </div>
+    </div>
+  </nav>
+  <!-- <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="index.html">Nidhi Soni</a>
+      </div>
+      <ul class="nav navbar-nav" style="float:right;">
+        <li><a href="#Intro">Intro</a></li>
+        <li><a href="#TS">Technical Summary</a></li>
+        <li><a href="#Qualifications">Qualifications</a></li>
+        <li><a href="#">Skills</a></li>
+        <li><a href="#">Noncollegiate</a></li>
+        <li><a href="#">Portfolio</a></li>
+        <li><a href="#">Freelancing Role</a></li>
+      </ul>
+    </div>
+  </nav> -->
+
+
+
+  <div class="background" id="Intro">
+    <video src="images/Rendering - 26011.mp4" controls autoplay muted loop class="vd"></video>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-10 col-lg-offset-3 col-lg-6">
+          <div class="box">
+
+            <!-- <img src="images/IMG_20230201_163303.jpg" alt="image" height="100px" width="100px" class="image"> -->
+
+            <h1 class="text-center" style="padding-top: 20px;"></i>I'M NIDHI SONI</h1>
+            <p class="header">TRANIEE ENGINEER @ INVESTIS DIGITAL</p>
+            <hr />
+            <i class="fa fa-phone"
+              style="color:rgb(255, 255, 255);font-size:20px;margin-left: 20px; margin-right: 10px; padding-bottom: 5px;">&nbsp
+              6354762688</i>
+            <i class="fa fa-envelope"
+              style="color:rgb(255, 255, 255);font-size:20px;margin-left: 110px; margin-right: 10px;">&nbsp
+              nidhiajaysoni987@gmail.com</i>
+            <hr />
+            <i class="fa fa-map-pin"
+              style="color:rgb(255, 255, 255);font-size:20px;margin-left: 50px; margin-right: 5px;text-align: center;">&nbsp
+              B-59 Santinagar Society, Sahyog, Vadodara - 390016</i>
+            <hr />
+            <p class="header">Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque fugit laudantium
+              dolores! Est in facere unde, harum quia quidem? Quod iste, dolores dolorem laboriosam accusantium sint
+              adipisci voluptatum consectetur rerum.</p>
+            <hr />
+            <p class="header">Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque fugit laudantium
+              dolores! Est in facere unde, harum quia quidem? Quod iste, dolores dolorem laboriosam accusantium sint
+              adipisci voluptatum consectetur rerum.</p>
+            <hr />
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <div class="background" id="TS">
+    <img src="images/wp7453551.jpg" alt="image" class="image">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-10 col-lg-offset-1 col-lg-10">
+          <div class="box">
+            <h1 class="text-center" style="padding-top: 20px;"></i>TECHNICAL SUMMARY</h1>
+            <hr />
+            <ul>
+              <li>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quae labore nostrum qui iste sint maiores
+                magni quibusdam, asperiores maxime mollitia quia est eius explicabo tenetur aspernatur! Dolores est
+                accusamus hic.</li>
+              <hr />
+              <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate amet iste a nulla facilis adipisci
+                culpa, incidunt nobis qui quidem ab, dolores aut aperiam repudiandae exercitationem deleniti repellendus
+                molestiae laborum?</li>
+              <hr />
+              <li>Lorem ipsum dolor sit, amet consectetur adipisicing elit. In, deserunt. Est, iure beatae sapiente nam
+                molestiae natus odio doloribus iste dolore nihil vel, cum, animi magni? Minima soluta fugiat amet!</li>
+
+
+            </ul>
+            <hr />
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="background" id="Qualifications">
+    <img src="images/image-wooden.jpg" alt="image" class="image">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-8 col-lg-offset-1 col-lg-8">
+          <div class="box">
+            <h1 class="text-center" style="padding-top: 20px;"></i>QUALIFICATIONS</h1>
+            <hr />
+            <table width="100%" style="border-collapse: collapse;border:1;">
+              <thead>
+                <tr>
+                  <th>Year</th>
+                  <th>Qualifications</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>
+                    2016-17
+                  </td>
+                  <td>SSC <br> CGPA : 7.8 <br> School: Baselios Public School</td>
+                </tr>
+                <tr>
+                  <td>
+                    2018-19
+                  </td>
+                  <td>HSC <br> CGPA : 7.4 <br> School: Baselios Public School</td>
+                </tr>
+                <tr>
+                  <td>
+                    2019-23
+                  </td>
+                  <td>B Tech IT <br> CGPA : 8.2 <br> University: Navrachna Universiy</td>
+                </tr>
+                <tr>
+
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="background" id="Qualifications">
+    <img src="images/image-wooden.jpg" alt="image" class="image">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-8 col-lg-offset-3 col-lg-8">
+          <div class="box">
+            <h1 class="text-center" style="padding-top: 20px;"></i>CERTIFICATIONS</h1>
+            <hr />
+            <table width="100%" style="border-collapse: collapse;border:1;">
+              <thead>
+                <tr>
+                  <th>Year</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>
+                    Aug 23,2022
+                  </td>
+                  <td>Google Cloud <br>Exploring and Preparing your Data with BigQuery</td>
+                </tr>
+                <tr>
+                  <td>
+                    Sept 15,2022
+                  </td>
+                  <td>Google Cloud <br>Creating BigQuery Dataset and Visualizing Insights</td>
+                </tr>
+                <tr>
+                  <td>
+                    Aug 23,2022
+                  </td>
+                  <td>Google Cloud <br>Exploring and Preparing your Data with BigQuery</td>
+                </tr>
+                <tr>
+                  <td>
+                    May 09,2021
+                  </td>
+                  <td>TCS iON<br>TCS iON Career Edge - Young Professional</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="background-form" style="background-image: url(images/background.jpg);" id="contact">
+    <div class="row" style>
+      <div class="col-xs-12 col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4 col-lg-offset-1 col-lg-5" id="CNAForm">
+        <h3 class="text-center"><i class="fa fa-users"></i> Contact Us
+          <hr />
+        </h3>
+        <div class="form-group">
+          <b>Firstname:</b>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+            <input type="text" id="TxtFirstname" placeholder="Enter firstname here.." maxlength="20"
+              class="form-control" />
+          </div>
+          <small class="text-danger" id="TxtFirstnameValidate"></small>
+        </div>
+        <div class="form-group">
+          <b>Lastname:</b>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+            <input type="text" id="TxtLastname" placeholder="Enter lastname here.." maxlength="20"
+              class="form-control" />
+          </div>
+          <small class="text-danger" id="TxtLastnameValidate"></small>
+        </div>
+        <div class="form-group">
+          <b>Email Id:</b>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+            <input type="text" id="TxtEmailid" placeholder="Enter email id here.." maxlength="50"
+              class="form-control" />
+          </div>
+          <small class="text-danger" id="TxtEmailidValidate"></small>
+        </div>
+        <div class="form-group">
+          <b><i class="fa fa-phone"></i> Contact No.:</b>
+          <div class="input-group">
+            <span class="input-group-addon">+91</span>
+            <input type="text" id="TxtContactNo" placeholder="Enter contact no. here.." maxlength="10"
+              class="form-control" />
+          </div>
+          <small class="text-danger" id="TxtContactNoValidate"></small>
+        </div>
+        <div class="form-group">
+          <b>Message:</b>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+            <textarea id="TxtMessage" placeholder="Enter message here.." name="Message" rows="4" cols="40"></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <a class="btn btn-primary" id="BtnSub" style="background-color: rgb(175, 121, 54);"><i style="color:white;"
+              class="fa fa-user-plus"></i> Submit</a>
+        </div>
+      </div>
+    </div>
+
+
+
+</body>
+
+</html>
